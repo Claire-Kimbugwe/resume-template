@@ -1,0 +1,154 @@
+{% set icons = {
+  'phone': 'fas fa-phone',
+  'homepage': 'fas fa-home',
+  'email': 'fas fa-envelope',
+  'github': 'fab fa-github-alt',
+  'linkedin': 'fab fa-linkedin'
+} %}
+
+{% macro icon(type) -%}
+  <i class="fa {{ icons[type] }}"></i>
+{%- endmacro %}
+
+{% macro render_data(d) %}
+  <li>
+    <span class="data-title">{{ d.title }}:</span>
+    <span class="data-content">{{ ', '.join(d.data) }}</span>
+  </li>
+{% endmacro %}
+
+{% macro render_ed(d) %}
+  <li>
+    <span class="school">{{ d.title }}</span> &#124;
+    <span class="school-desc">{{ d.description }}</span>
+  </li>
+{% endmacro %}
+
+{% macro list(items, class='', li_renderer=None) %}
+  <ul class="{{ class }}">
+    {% for li in items %}
+      {% if li_renderer %}
+        {{ li_renderer(li) }}
+      {% else %}
+        {% set li = li.capitalize() %}
+        <li>{{ li }}</li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endmacro %}
+
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8">
+  <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>    
+</head>
+<body>
+  <header>
+    <section class="title">
+      <h1>{{ name }}: {{ headline }}</h1>
+    </section>
+    <section class="contact">
+      <ul>
+        <li>
+          {{ icon('phone') }}
+          <span>{{ contact.phone }}</span>
+        </li>
+        <li>
+          {{ icon('homepage') }}
+          <a href="{{ contact.homepage }}">
+            {{ contact.homepage }}
+          </a>
+        </li>
+        <li>
+          {{ icon('email') }}
+          <a href="mailto:{{ contact.email }}">
+            {{ contact.email }}
+          </a>
+        </li>
+        {% if 'social' in contact %}
+          {% for s in contact.social %}
+            <li>
+              {{ icon(s.type) }}
+              <a href="{{ s.link }}">{{ s.user }}</a>
+            </li>
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </section>
+  </header>
+  <main>
+    <section class="tech">
+      <h2>Technologies</h2>
+      <div class="columns">
+        <section class="langs">
+          {% set langs = technologies.languages %}
+          <h3>{{ langs.title }}</h3>
+          {{ list(langs.data, li_renderer=render_data) }}
+        </section>
+        <section class="skills">
+          {% set tools = technologies.skills %}
+          <h3>{{ tools.title }}</h3>
+          {{ list(tools.data, li_renderer=render_data) }}
+        </section>
+      </div>
+    </section>
+    <section class="experience">
+      <h2>{{ experience.title }}</h2>
+      {% for exp in experience.data %}
+        <section class="work-exp">
+          {% set end = exp.end if 'end' in exp else 'current' %}
+          <h3>
+            {{ exp.start }}{{ '—' + end if end else '' }} &#124; {{ exp.job_title }},
+            <span class="employer">{{ exp.employer }}</span>
+          </h3>
+          {{ list(exp.description) }}
+        </section>
+      {% endfor %}
+    </section>
+    <section class="projects">
+      <h2>{{ projects.title }}</h2>
+      {% for proj in projects.data %}
+        <section class="project">
+          <h3>
+            {{ proj.start}} &#124; {{ proj.title }}
+          </h3>
+          <p>
+            {{ proj.description }}
+          </p>
+        </section>
+      {% endfor %}
+    </section>
+    <section class="education">
+      {% if 'title ' in education %}
+        <h2>{{ education.title }}</h2>
+      {% else %}
+        <h2>Education</h2>
+      {% endif %}
+      {{ list(education.data, 'education', render_ed) }}
+    </section>
+  </main>
+  <footer>
+    <h2>Footnotes</h2>
+    <p>
+      <b>I've contributed to</b>
+      <a href="http://github.com/qmk/qmk_firmware/">QMK Firmware</a>,
+      <a href="https://github.com/tridactyl/tridactyl">Tridactyl</a>,
+      the <a href="https://reddit.com/r/unixporn">PC ricing community</a>,
+      <a href="https://github.com/atrnh?tab=repositories">and more</a>.
+    </p>
+    <p>
+      <b>Ask me about</b> references, student testimonials, IT/tech education.
+    </p>
+    <p>
+      <b>Check out my latest thoughts &plus; writeups at</b>
+      <a href="https://imsca.red">imsca.red</a>.
+    </p>
+    </p>
+  </footer>
+</body>
+</html>
