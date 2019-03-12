@@ -1,6 +1,6 @@
 # resume-template
 
-[Live demo](https://imsca.red/assets/resume.html)
+### [Click here to view the live demo](https://imsca.red/assets/resume.html)
 
 ![screenshot](screenshot/resume.png)
 
