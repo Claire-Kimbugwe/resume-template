@@ -2,6 +2,8 @@
 
 [Live demo](https://imsca.red/assets/resume.html)
 
+![screenshot](screenshot/resume.png)
+
 ## features
 
 - Printer-friendly stylesheet!
