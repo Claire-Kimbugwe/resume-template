@@ -54,7 +54,6 @@ config = {
                         'SQL',
                         'RST',
                         'bash/zsh',
-                        'make'
                     ],
                 },
             ],
@@ -71,6 +70,7 @@ config = {
                         'git',
                         'nvm',
                         'yarn/npm',
+                        'make',
                         'Webpack',
                         'Adobe CC',
                     ],
